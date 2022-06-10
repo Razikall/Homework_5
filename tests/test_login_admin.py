@@ -1,0 +1,11 @@
+def test_admin_elements(browser):
+    browser.get(browser.url + "/admin")
+    browser.find_element_by_class_name("fa-lock")
+    browser.find_elements_by_link_text("Username")
+    browser.find_elements_by_link_text("Password")
+    browser.find_element_by_class_name("fa-user")
+    browser.find_element_by_class_name("fa-lock")
+    browser.find_element_by_id("input-username")
+    browser.find_element_by_id("input-password")
+    browser.find_elements_by_link_text("Forgotten Password")
+    browser.find_element_by_class_name("btn-primary")
