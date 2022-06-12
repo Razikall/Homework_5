@@ -8,7 +8,7 @@ from selenium.webdriver.firefox.service import Service as FFService
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
-    parser.addoption("--url", action="store", default="http://192.168.1.45:8081")
+    parser.addoption("--url", action="store", default="http://192.168.1.44:8081")
     parser.addoption("--drivers", action="store", default=os.path.expanduser("~/Drivers"))
 
 
@@ -31,7 +31,7 @@ def browser(request):
         raise ValueError("Browser not supported")
 
     driver.maximize_window()
-    request.addfinalizer(driver.close)
+    request.addfinalizer(driver.quit)
 
     driver.get(url)
     driver.url = url

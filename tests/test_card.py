@@ -1,26 +1,24 @@
+from Homework_5.page_objects.CardPage import CardPage
+from Homework_5.page_objects.MainPage import MainPage
+from selenium.webdriver.common.by import By
+
+
 def test_card_len_thumbnail(browser):
-    browser.get(browser.url + "/smartphone/iphone")
-    thumbnail_items = browser.find_elements_by_class_name("thumbnail")
-    assert len(thumbnail_items) == 6
+    CardPage(browser).go_smartphone_page()
+    CardPage(browser).thumbnail_items()
 
 
 def test_card_elements(browser):
-    browser.get(browser.url + "/smartphone/iphone")
-    browser.find_element_by_class_name("product-thumb")
-    browser.find_element_by_link_text("Description")
-    browser.find_element_by_link_text("Reviews (0)")
-    browser.find_element_by_class_name("btn-group")
-    browser.find_element_by_id("button-cart")
-    browser.find_elements_by_class_name("list-unstyled")
+    CardPage(browser).go_smartphone_page()
+    CardPage(browser).validate_elements()
+    browser.find_element(By.CLASS_NAME, "product-thumb")
+    browser.find_element(By.LINK_TEXT, "Description")
+    browser.find_element(By.LINK_TEXT, "Reviews (0)")
+    browser.find_element(By.CLASS_NAME, "btn-group")
+    browser.find_element(By.ID, "button-cart")
+    browser.find_elements(By.CLASS_NAME, "list-unstyled")
 
 
 def test_card_footer_blocks(browser):
-    browser.get(browser.url + "/smartphone/iphone")
-    footer_blocks = browser.find_elements_by_xpath("//footer//ul")
-    assert len(footer_blocks) == 4
-
-
-def test_card_len_navbar(browser):
-    browser.get(browser.url + "/smartphone/iphone")
-    navbar_items = browser.find_elements_by_css_selector("ul.navbar-nav > li")
-    assert len(navbar_items) == 8
+    CardPage(browser).go_smartphone_page()
+    MainPage(browser).footer_blocks()
