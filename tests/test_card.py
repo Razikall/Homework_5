@@ -1,24 +1,27 @@
 from Homework_5.page_objects.CardPage import CardPage
 from Homework_5.page_objects.MainPage import MainPage
-from selenium.webdriver.common.by import By
+import allure
 
 
+@allure.title("Checking thumbnail items")
 def test_card_len_thumbnail(browser):
-    CardPage(browser).go_smartphone_page()
-    CardPage(browser).thumbnail_items()
+    page = CardPage(browser)
+    page.open(browser.url)
+    page.go_smartphone_page()
+    page.thumbnail_items()
 
 
+@allure.title("Checking card items")
 def test_card_elements(browser):
-    CardPage(browser).go_smartphone_page()
-    CardPage(browser).validate_elements()
-    browser.find_element(By.CLASS_NAME, "product-thumb")
-    browser.find_element(By.LINK_TEXT, "Description")
-    browser.find_element(By.LINK_TEXT, "Reviews (0)")
-    browser.find_element(By.CLASS_NAME, "btn-group")
-    browser.find_element(By.ID, "button-cart")
-    browser.find_elements(By.CLASS_NAME, "list-unstyled")
+    page = CardPage(browser)
+    page.open(browser.url)
+    page.go_smartphone_page()
+    page.validate_elements()
 
 
+@allure.title("Checking footer blocks")
 def test_card_footer_blocks(browser):
-    CardPage(browser).go_smartphone_page()
+    page = CardPage(browser)
+    page.open(browser.url)
+    page.go_smartphone_page()
     MainPage(browser).footer_blocks()

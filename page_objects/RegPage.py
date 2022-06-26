@@ -1,33 +1,55 @@
 from selenium.webdriver.common.by import By
 from Homework_5.helpers import random_email
-from .BasePage import BasePage
+from Homework_5.page_objects.BasePage import BasePage
+import allure
 
 
 class RegPage(BasePage):
+    DROPDOWN = (By.CLASS_NAME, "dropdown")
+    REG_PAGE_BTN = (By.LINK_TEXT, "Register")
+    REGISTER_ACCOUNT = (By.LINK_TEXT, "Register Account")
+    PERSONAL_DETAILS = (By.LINK_TEXT, "Your Personal Details")
+    PASSWORD = (By.LINK_TEXT, "Your Password")
+    NEWSLETTER = (By.LINK_TEXT, "Newsletter")
+    FIRSTNAME = (By.ID, "input-firstname")
+    LASTNAME = (By.ID, "input-lastname")
+    EMAIL = (By.ID, "input-email")
+    TELEPHONE = (By.ID, "input-telephone")
+    INPUT_PASSWORD = (By.ID, "input-password")
+    INPUT_CONFIRM = (By.ID, "input-confirm")
+    AGREE_BTN = (By.NAME, "agree")
+    BTN_REG = (By.CLASS_NAME, "btn-primary")
+    REG_MESSAGE = (By.ID, "content")
 
+    @allure.step
     def find_reg_page(self):
-        self.browser.find_element(By.CLASS_NAME, "dropdown").click()
-        self.browser.find_element(By.LINK_TEXT, "Register").click()
+        self.click(self.DROPDOWN)
+        self.click(self.REG_PAGE_BTN)
 
+    @allure.step
     def validate_elements(self):
-        self.browser.find_elements(By.LINK_TEXT, "Register Account")
-        self.browser.find_elements(By.LINK_TEXT, "Your Personal Details")
-        self.browser.find_elements(By.LINK_TEXT, "Your Password")
-        self.browser.find_elements(By.LINK_TEXT, "Newsletter")
+        self.log_element(self.REGISTER_ACCOUNT)
+        self.log_element(self.REGISTER_ACCOUNT)
+        self.log_element(self.PERSONAL_DETAILS)
+        self.log_element(self.PASSWORD)
 
-    def fill_personal(self, firstname, lastname, telephone):
-        self.browser.find_element(By.ID, "input-firstname").send_keys(firstname)
-        self.browser.find_element(By.ID, "input-lastname").send_keys(lastname)
-        self.browser.find_element(By.ID, "input-email").send_keys(random_email())
-        self.browser.find_element(By.ID, "input-telephone").send_keys(telephone)
+    @allure.step
+    def fill_personal(self):
+        self.send_keys(self.FIRSTNAME, "user")
+        self.send_keys(self.LASTNAME, "lastuser")
+        self.send_keys(self.EMAIL, random_email())
+        self.send_keys(self.TELEPHONE, "312352")
 
-    def fill_password(self, pas, confirm):
-        self.browser.find_element(By.ID, "input-password").send_keys(pas)
-        self.browser.find_element(By.ID, "input-confirm").send_keys(confirm)
+    @allure.step
+    def fill_password(self):
+        self.send_keys(self.INPUT_PASSWORD, "qazqaz")
+        self.send_keys(self.INPUT_CONFIRM, "qazqaz")
 
+    @allure.step
     def start_reg(self):
-        self.browser.find_element(By.NAME, "agree").click()
-        self.browser.find_element(By.CLASS_NAME, "btn-primary").click()
+        self.click(self.AGREE_BTN)
+        self.click(self.BTN_REG)
 
+    @allure.step
     def validate_reg_message(self):
-        self.browser.find_element(By.ID, "content")
+        self.log_element(self.REG_MESSAGE)

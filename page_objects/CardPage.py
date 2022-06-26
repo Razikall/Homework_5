@@ -1,23 +1,32 @@
 from selenium.webdriver.common.by import By
-from .BasePage import BasePage
+from Homework_5.page_objects.BasePage import BasePage
+import allure
 
 
 class CardPage(BasePage):
+    iPhone_btn = (By.LINK_TEXT, "iPhone")
+    THUMBNAIL = (By.CLASS_NAME, "thumbnail")
+    PRODUCT_THUMB = (By.CLASS_NAME, "product-thumb")
+    DESCRIPTION = (By.LINK_TEXT, "Description")
+    REVIEWS = (By.LINK_TEXT, "Reviews (0)")
+    BTNS_FUNC = (By.CLASS_NAME, "btn-group")
+    BTN_CART = (By.ID, "button-cart")
+    PRODUCT_INFO = (By.CLASS_NAME, "list-unstyled")
 
+    @allure.step
     def go_smartphone_page(self):
-        self.browser.find_element(By.LINK_TEXT, "iPhone").click()
+        self.click(self.iPhone_btn)
 
+    @allure.step
     def thumbnail_items(self):
-        thumbnail_items = self.browser.find_elements(By.CLASS_NAME, "thumbnail")
-        if len(thumbnail_items) == 6:
-            return True
-        else:
-            return "thumbnail_items !=6"
+        thumbnail_items = self.THUMBNAIL
+        self.len_count(thumbnail_items, 6)
 
+    @allure.step
     def validate_elements(self):
-        self.browser.find_element(By.CLASS_NAME, "product-thumb")
-        self.browser.find_element(By.LINK_TEXT, "Description")
-        self.browser.find_element(By.LINK_TEXT, "Reviews (0)")
-        self.browser.find_element(By.CLASS_NAME, "btn-group")
-        self.browser.find_element(By.ID, "button-cart")
-        self.browser.find_elements(By.CLASS_NAME, "list-unstyled")
+        self.log_element(self.PRODUCT_THUMB)
+        self.log_element(self.DESCRIPTION)
+        self.log_element(self.REVIEWS)
+        self.log_element(self.BTNS_FUNC)
+        self.log_element(self.BTN_CART)
+        self.log_element(self.PRODUCT_INFO)
