@@ -1,23 +1,28 @@
 from Homework_5.page_objects.ProductPage import ProductPage
+import allure
 
 
+@allure.title("Add product in admin")
 def test_add_product(browser):
-    browser.get(browser.url + "/admin")
-    ProductPage(browser).login_data("user", "bitnami")
+    page = ProductPage(browser)
+    page.open(browser.url + "/admin")
+    page.login()
 
-    ProductPage(browser).find_products_page()
-    ProductPage(browser).create_product("Product", "test", "test1")
-    ProductPage(browser).validate_message()
+    page.find_products_page()
+    page.create_product()
+    page.validate_message()
 
 
+@allure.title("Delete product in admin")
 def test_delete_product(browser):
-    browser.get(browser.url + "/admin")
-    ProductPage(browser).login_data("user", "bitnami")
+    page = ProductPage(browser)
+    page.open(browser.url + "/admin")
+    page.login()
 
-    ProductPage(browser).find_products_page()
-    ProductPage(browser).find_product("Product")
+    page.find_products_page()
+    page.find_product()
 
-    ProductPage(browser).delete_product()
-    ProductPage(browser).accept_alert()
+    page.delete_product()
+    page.accept_alert()
 
-    ProductPage(browser).validate_message()
+    page.validate_message()
